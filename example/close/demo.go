@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"time"
 
@@ -41,7 +42,7 @@ func main() {
 
 	go func() {
 		for {
-			err := sendCh.Publish(exchangeName, "", false, false, amqp.Publishing{
+			err := sendCh.PublishWithContext(context.Background(), exchangeName, "", false, false, amqp.Publishing{
 				ContentType: "text/plain",
 				Body:        []byte(time.Now().String()),
 			})
